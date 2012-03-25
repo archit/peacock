@@ -1,9 +1,0 @@
-Peacock DEPENDS - a list of dependencies.
-Copyright (C) 2001 Archit Baweja
-
-* gnome-libs
-* GtkHTML	>= 0.4    
-* LibGlade	>= 0.16   
-* GConf		>= 0.6.0  
-* PonG		>= 1.0.0
-* intltool	>= 0.21
