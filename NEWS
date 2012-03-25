@@ -1,0 +1,59 @@
+Peacock NEWS -- history of user visible changes.
+Copyright (C) 2000, 2001, 2002 Archit Baweja
+
+New in 0.6
+* Find and/or Replace - I finally added the Find and/or Replace functions. 
+  Something basic everyone expects from any kind of editor (text, html etc).
+* The wonderful world of GnomeVFS - All the file operations have been shifted
+  to the GnomeVFS architecture (previously it was the POSIX complaint standard
+  C FILE API). This means you can edit files directly from the web, ftp,
+  even across networks using protocols like Samba etc, basically the ones
+  supported by GnomeVFS. Including those from secured sites which require
+  usernames/passwords.
+  Example: ftp://username@password:ftp.mysite.com/my/websites/files/index.html
+* GtkHTML Preview click functionality - now you can click on a link in the
+  Preview Pane, and Peacock will open the new file for you in the editor.
+  Something to pamper the lazy web hacker.
+
+New in 0.5
+* GConf + PonG based preferences - Now the user has the ability to customize 
+  to his own needs, including 
+	o toggles to show/hide the Main toolbar and HTML toolbars now use GConf
+	o show/hide desired HTML toolbars
+* Templates - A very basic template thinggie. Every new file opened, has the
+  basic HTML tags already in there. Just some convinience to the HTML coder.
+
+New in 0.4
+* GtkHTML based Preview - the Preview functionality using GtkHTML is working
+  now. So no more firing up of netscape each time you want to see how your
+  webpage will look like!
+* File Browser - an inbuilt 'one click file browser' is now available in the
+  main window. Note however there are serious problems with resizing of the
+  main application window when File Browser is shown. So by default hidden.
+  To enable : Main Menu -> Settings -> View File Browser.
+* Command Line Arguments - believe it or not, this is the first version of
+  Peacock to support command line arguments (files for now)!
+
+New in 0.3
+* MDI Support - You can open multiple files at once.
+* Session Management - All the files open in the last session are opened when
+  you start again.
+* Couple of more HTML Toolbars.
+* Drag N' Drop - You can now drag your files into the editor to open them.
+
+New in 0.2
+* Minimal Session Management - remembers the size and position of window in
+  last session.
+* Toggles to view/hide the Main toolbar and HTML toolbars.
+* A Preview window using the Gtk-XmHTML widget.
+* HTML Toolbars :-
+	* Basic html toolbar is divided into 2 -- Basic #1 and Basic #2.
+	* Fonts html toolbar is divided into 2 -- Fonts and Headings.
+	* Lists html toolbar is complete.
+	* Forms html toolbar is complete.
+	* Tables html toolbar is complete.
+* Edit menu is available as a popup menu.
+* The manual has been turned into a multi-page one, rather than just a single
+  page.
+* The normal file operations have been improved. The checks for unsaved files
+  have been improved. Option to save unsaved file is provided.

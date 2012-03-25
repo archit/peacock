@@ -1,0 +1,58 @@
+%define  ver        @VERSION@
+%define  rel 	    1
+%define  prefix     /usr
+%define  sysconfdir /etc
+
+Summary: Peacock, A HTML Editor for GTK+/GNOME
+Name: peacock
+Version: %ver
+Release: %rel
+Copyright: GPL
+Group: Development/Tools
+Source: peacock-%{ver}.tar.gz
+URL: http://peacock.sourceforge.net/
+Packager: Archit Baweja <bighead@users.sourceforge.net>
+BuildRoot: /var/tmp/peacock-%{ver}-root
+Prefix: %prefix
+
+Requires: gtk+ >= 1.2.0
+Requires: gnome-libs >= 1.2.0
+Requires: libglade >= 0.16
+Requires: gtkhtml >= 0.4
+Requires: GConf >= 0.6.0
+Requires: pong >= 1.0.0
+
+%description
+Peacock is a HTML Editor for GTK+/GNOME.  It supports most of basic HTML.
+It features Session Management and HTML Preview using the GtkHTML widget.
+It is licensed under GPL.
+
+%prep
+%setup -q
+
+%build
+./configure --prefix=%prefix --sysconfdir=%sysconfdir
+
+if [ "$SMP" != "" ]; then
+  (make "MAKE=make -k -j $SMP"; exit 0)
+  make
+else
+  make
+fi
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make prefix=$RPM_BUILD_ROOT%{prefix} sysconfdir=$RPM_BUILD_ROOT%{sysconfdir} install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-, root, root)
+%doc README AUTHORS COPYING NEWS TODO ChangeLog THANKS HACKING DEPENDS
+%{prefix}/bin/peacock
+%{prefix}/share/pixmaps/peacock
+%{prefix}/share/gnome/help/peacock
+%{prefix}/share/peacock
+%config %{prefix}/share/gnome/apps/Development/peacock.desktop
+%config %{sysconfdir}/gconf/schemas/peacock.schemas

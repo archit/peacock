@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="no"?>
+<omf>
+  <resource>
+    <title>
+     Peacock's User Manual
+    </title>
+
+    <creator>
+    <person>	
+      <firstName>Archit</firstName>
+      <lastName>Baweja</lastName>
+      <email>bighead@users.sourceforge.net</email>
+    </person>
+    </creator>
+
+    <subject>
+      <category>Applications|Development</category>
+    </subject>
+    <description>
+      This is the user's manual for the Peacock HTML Editor.
+    </description>
+    <type>manual </type>
+    <format mime="text/sgml"/>
+    <identifier url="peacock.sgml"/>
+    <language code="C"/>
+  </resource>
+</omf>

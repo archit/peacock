@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<PongElements>
+  <BaseConfPath>/apps/peacock/</BaseConfPath>
+  <Help>
+    <Name>peacock</Name>
+    <Path>prefs.html</Path>
+  </Help>
+  <_DialogTitle>Peacock Preferences</_DialogTitle>
+  <SchemaOwner>peacock</SchemaOwner>
+  <Element>
+    <Type>String</Type>
+    <ConfPath>author/name</ConfPath>
+    <_SchemaLongDescription>The Full Name of the web page's author. This is used
+when inserting the name of the author in the HTML file
+using meta tags.</_SchemaLongDescription>
+    <Widget>author_name</Widget>
+    <_SchemaShortDescription>Author's Full Name</_SchemaShortDescription>
+  </Element>
+  <Element>
+    <Type>String</Type>
+    <ConfPath>author/email</ConfPath>
+    <Widget>author_email</Widget>
+    <_SchemaShortDescription>Author's email address</_SchemaShortDescription>
+    <_SchemaLongDescription>The full email address of the web page's author. This is
+used when inserting the author's email address in the
+HTML using meta tags.</_SchemaLongDescription>
+  </Element>
+  <Pane>
+    <Name>section1</Name>
+    <Group>
+      <Name>author_details</Name>
+      <_Label>Author's Information</_Label>
+      <Widget>
+        <Name>author_name</Name>
+        <_Label>Author's Name</_Label>
+        <_Tooltip>Author's full name.</_Tooltip>
+        <Type>Gtk:Entry</Type>
+      </Widget>
+      <Widget>
+        <Name>author_email</Name>
+        <_Label>Author's Email</_Label>
+        <_Tooltip>Author's email address.</_Tooltip>
+        <Type>Gtk:Entry</Type>
+      </Widget>
+    </Group>
+    <_Label>General</_Label>
+  </Pane>
+  <Pane>
+    <Name>section2</Name>
+    <_Label>Editor</_Label>
+    <Group>
+      <Name>editor_toolbars</Name>
+      <_Label>HTML Toolbars</_Label>
+      <Widget>
+        <Name>editor_html-toolbars_basic</Name>
+        <Type>Gtk:Check:Button</Type>
+        <_Label>Show Basic HTML Toolbar</_Label>
+      </Widget>
+      <Widget>
+        <Name>editor_html-toolbars_fonts</Name>
+        <_Label>Show Font tags toolbar.</_Label>
+      </Widget>
+      <Widget>
+        <Name>editor_html-toolbars_headings</Name>
+        <_Label>Show Heading tags toolbar.</_Label>
+      </Widget>
+      <Widget>
+        <Name>editor_html-toolbars_lists</Name>
+        <_Label>Show List tags toolbar.</_Label>
+      </Widget>
+      <Widget>
+        <Name>editor_html-toolbars_forms</Name>
+        <_Label>Show Form tags toolbar.</_Label>
+      </Widget>
+      <Widget>
+        <Name>editor_html-toolbars_tables</Name>
+        <_Label>Show Table tags toolbar.</_Label>
+      </Widget>
+    </Group>
+  </Pane>
+  <Pane>
+    <Name>section3</Name>
+    <_Label>Template</_Label>
+    <Group>
+      <Name>meta_tags</Name>
+      <_Label>META Tags</_Label>
+      <Widget>
+        <Name>html_meta_author-info</Name>
+        <Type>Gtk:Check:Button</Type>
+        <_Label>Insert author's info using HTML meta tags.</_Label>
+      </Widget>
+      <Widget>
+        <Name>html_meta_generator-info</Name>
+        <Type>Gtk:Check:Button</Type>
+        <_Label>Insert generator's info using HTML meta tags.</_Label>
+      </Widget>
+    </Group>
+  </Pane>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/html-toolbars/basic</ConfPath>
+    <Widget>editor_html-toolbars_basic</Widget>
+    <_SchemaShortDescription>Show the basic HTML Toolbars.</_SchemaShortDescription>
+    <_SchemaLongDescription>Wether to display the Basic HTML tags toolbar.</_SchemaLongDescription>
+    <Default>True</Default>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/html-toolbars/fonts</ConfPath>
+    <Widget>editor_html-toolbars_fonts</Widget>
+    <_SchemaLongDescription>Wether to display the Font related tags toolbar.</_SchemaLongDescription>
+    <Default>True</Default>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/html-toolbars/headings</ConfPath>
+    <Widget>editor_html-toolbars_headings</Widget>
+    <_SchemaLongDescription>Wether to display the Headings related tags toolbar.</_SchemaLongDescription>
+    <Default>True</Default>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/html-toolbars/lists</ConfPath>
+    <Widget>editor_html-toolbars_lists</Widget>
+    <_SchemaLongDescription>Wether to display the Lists related tags toolbar.</_SchemaLongDescription>
+    <Default>True</Default>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/html-toolbars/forms</ConfPath>
+    <Widget>editor_html-toolbars_forms</Widget>
+    <_SchemaLongDescription>Wether to display the Forms related tag toolbar.</_SchemaLongDescription>
+    <Default>True</Default>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/html-toolbars/tables</ConfPath>
+    <Widget>editor_html-toolbars_tables</Widget>
+    <_SchemaLongDescription>Wether to display the Tables related tags toolbar.</_SchemaLongDescription>
+    <Default>True</Default>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>html/meta/author-info</ConfPath>
+    <Widget>html_meta_author-info</Widget>
+    <_SchemaLongDescription>Wether to insert author's info in the HTML using meta tags.</_SchemaLongDescription>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>html/meta/generator-info</ConfPath>
+    <Widget>html_meta_generator-info</Widget>
+    <_SchemaLongDescription>Wether to insert Generator's info in the HTML using meta
+ tags.</_SchemaLongDescription>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/toolbars/main</ConfPath>
+    <Default>True</Default>
+    <_SchemaShortDescription>Show/Hide the main toolbar.</_SchemaShortDescription>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/toolbars/html</ConfPath>
+    <Default>True</Default>
+    <_SchemaShortDescription>Show/Hide the html toolbars.</_SchemaShortDescription>
+  </Element>
+  <Element>
+    <Type>Bool</Type>
+    <ConfPath>editor/toolbars/file-browser</ConfPath>
+    <Default>True</Default>
+    <_SchemaShortDescription>Show/Hide the file-browser.</_SchemaShortDescription>
+  </Element>
+</PongElements>

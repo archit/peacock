@@ -1,0 +1,18 @@
+Peacock TODO -- list of things to do till 1.0.
+Copyright (C) 2001 Archit Baweja
+
+
+*** Yet to be done
+* Make all possible file I/O asynchronous using GnomeVFS
+* Specialized HTML "Objects" (aka wizards for common things to do) especially
+  for Tables, Frames, Forms, Navigation Bar, Special HTML Characters.
+* Some WYSIWYG HTML Editing (maybe) 
+* Peacock Lovers! You tell me!
+
+*** Done (for reference)
+* Add all the HTML toolbars.
+* MDI. (done)
+* popt stuff.
+* session management stuff.
+
+July, 2003

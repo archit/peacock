@@ -1,0 +1,29 @@
+Peacock README
+==============
+
+Introduction
+------------
+Peacock is a HTML Editor for GTK+/GNOME. Its has many nifty features like
+Session Management and HTML Preview. Its small and fast. Its licensed under
+GNU General Public License (GPL). See COPYING for details.
+
+Copyright (C) 2000, 2001, 2002 Archit Baweja
+
+Homepage
+--------
+http://peacock.sourceforge.net/
+
+Mailing Lists
+-------------
+peacock-general@lists.sourceforge.net
+peacock-devel@lists.sourceforge.net
+
+*IMPORTANT*
+This is the peacock module. In other words, this copy will work with a
+Gnome 1.4 install. It is not supposed to work with the new Gnome 2.0.
+To get the latest Gnome 2.0 compatible branch you'll have to do
+
+		cvs -z3 co peacock-2
+
+*** EVEN MORE IMPORTANT - THIS MODULE IS DEAD ***
+

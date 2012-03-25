@@ -1,0 +1,6 @@
+[Desktop Entry]
+_Name=Peacock HTML Editor
+_Comment=A HTML Editor for GNOME
+Exec=peacock
+Terminal=0
+Type=Application

@@ -1,0 +1,13 @@
+# List of source files containing translatable strings.
+
+src/main.c
+src/windows-file.c
+src/windows-html.c
+src/about.c
+src/toolbars.c
+src/support.c
+src/callbacks.c
+src/callbacks-html.c
+peacock.desktop.in
+peacock.pong.in
+peacock.schemas.in
