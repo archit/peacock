@@ -1,6 +1,6 @@
-gladedir = $(datadir)/peacock/glade
+gladedir = $(datadir)/peacock-2/glade
 
 glade_DATA = \
-	dialogs-html.glade dialogs-html.glade.h
+	dialogs.glade
 
 EXTRA_DIST = $(glade_DATA)

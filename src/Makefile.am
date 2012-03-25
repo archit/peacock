@@ -1,36 +1,35 @@
-## Process this file with automake to produce Makefile.in
+SUBDIRS = \
+	file \
+	dialogs
 
-SUBDIRS = dialogs
+bin_PROGRAMS = peacock-2
 
 INCLUDES = \
-	-I$(top_srcdir)/intl \
-	$(GNOME_INCLUDEDIR) \
-	$(LIBGLADE_CFLAGS) \
-	$(GTKHTML_CFLAGS)
+	$(PEACOCK_GNOME_DEPENDENCIES_CFLAGS) \
+	$(WARN_CFLAGS) \
+	-DDATADIR=\""$(datadir)/peacock-2"\" \
+	-DICONDIR=\""$(datadir)/peacock-2/pixmaps"\" \
+	-DUIXMLDIR=\""$(datadir)/peacock-2/ui"\" \
+	-DGLADEDIR=\""$(datadir)/peacock-2/glade"\" \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"
 
-bin_PROGRAMS = peacock
-
-peacock_SOURCES = \
+peacock_2_SOURCES = \
 	main.c \
-	support.c support.h \
-	windows-file.c windows-file.h \
-	windows-html.c windows-html.h \
-	html.c html.h \
-	about.c about.h \
-	toolbars.c toolbars.h \
-	callbacks.c callbacks.h \
-	callbacks-html.c callbacks-html.h \
-	callbacks-gtkhtml.c callbacks-gtkhtml.h \
-	peacock-tl.c peacock-tl.h \
-	dnd-helper.c dnd-helper.h \
-	peacock-file.c peacock-file.h \
-	peacock-file-view.c peacock-file-view.h \
-	peacock-file-browser.c peacock-file-browser.h \
-	menus.c menus.h
+	peacock-window.c \
+	peacock-window.h \
+	peacock-mdi.c \
+	peacock-mdi.h \
+	peacock-file-client.c \
+	peacock-file-client.h \
+	peacock-utils.c \
+	peacock-utils.h \
+	peacock-types.h
 
-peacock_LDADD = \
-	$(GNOME_LIBDIR) \
-	$(GNOMEUI_LIBS) \
-	$(GTKHTML_LIBS) \
-	$(LIBGLADE_LIBS) \
-	$(INTLLIBS) 
+peacock_2_LDADD = $(PEACOCK_GNOME_DEPENDENCIES_LIBS)
+
+# install the bonoboui xml file in the right place.
+uidir = $(datadir)/peacock-2/ui
+ui_DATA = peacock-ui.xml
+
+EXTRA_DIST = \
+	$(ui_DATA)

@@ -1,18 +1,29 @@
-Peacock TODO -- list of things to do till 1.0.
-Copyright (C) 2001 Archit Baweja
+TODO -- list of items/features still to be implemented in Peacock-2
+Copyright (C) 2003 Archit Baweja <bighead@users.sourceforge.net>
 
+Here's the legend
 
-*** Yet to be done
-* Make all possible file I/O asynchronous using GnomeVFS
-* Specialized HTML "Objects" (aka wizards for common things to do) especially
-  for Tables, Frames, Forms, Navigation Bar, Special HTML Characters.
-* Some WYSIWYG HTML Editing (maybe) 
-* Peacock Lovers! You tell me!
+[C] - completed.
+[W] - someone is working on it.
+[ ] - still to be started work on.
 
-*** Done (for reference)
-* Add all the HTML toolbars.
-* MDI. (done)
-* popt stuff.
-* session management stuff.
+Big Stuff
+---------
 
-July, 2003
+[W]	Implement the GNOME_Peacock_File control. This is going to be used
+	instead of the GNOME_GtkHTML_Editor control which will infact be
+	embedded in the Peacock_File control. (Archit Baweja)
+	
+[ ]	Implement the PeacockSite control. A hint of how it should be is, look
+	at the Macromedia Dreamweaver Site control. Talk to me about the rest.
+
+Small Stuff
+-----------
+
+[C]	Get Find/Find Again/Replace edit menu ops working. (Archit Baweja)
+
+[ ]	Get the PeacockHTMLToolbars object to communicate with the PeacockMDI
+	and subsequently with PeacockFile.
+
+[C]	Put a GtkStatusbar (or better still GnomeAppBar) in PeacockWindow,
+	and create an IDL interface to it.

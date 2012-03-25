@@ -1,0 +1,7 @@
+all: gtk-test bonobo-test
+
+gtk-test: 
+	gcc -O0 -g -o htmlbar-test-gtk-container test-gtk-container.c ../peacock-html-toolbars.o ../peacock-tl.o ../peacock-html-toolbars-marshal.o `pkg-config --cflags --libs libgnomeui-2.0` -I ../
+
+bonobo-test:
+	echo "No bonobo test yet"

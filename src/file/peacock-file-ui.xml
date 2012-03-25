@@ -1,0 +1,85 @@
+<Root>
+
+<commands>
+	<cmd name="EditUndo" _label="_Undo" _tip="Undo the last action"
+	  pixtype="stock" pixname="gtk-undo" accel="*Control*z"/>
+
+	<cmd name="EditRedo" _label="_Redo" _tip="Redo the undone action"
+	  pixtype="stock" pixname="gtk-redo" accel="*Shift**Control*z"/>
+
+        <cmd name="EditCut" _label="C_ut" _tip="Cut the selection"
+          pixtype="stock" pixname="gtk-cut" accel="*Control*x"/>
+	
+        <cmd name="EditCopy" _label="_Copy"
+	  _tip="Copy the selection" pixtype="stock" pixname="gtk-copy"
+	  accel="*Control*c"/>
+	
+        <cmd name="EditPaste" _label="_Paste"
+	  _tip="Paste the clipboard" pixtype="stock" pixname="gtk-paste"
+	  accel="*Control*v"/>
+	
+        <cmd name="EditDelete" _label="_Delete" _tip="Delete the selection"/>
+	
+	<cmd name="EditSelectAll" _label="_Select All"
+	 _tip="Select everything" accel="*Control*a"/>
+
+        <cmd name="EditFind" _label="_Find..." _tip="Search for a string"
+          pixtype="stock" pixname="gtk-find" accel="*Control*f"/>
+	
+        <cmd name="EditFindAgain" _label="Find _Again"
+	  _tip="Search again for the same string"
+          pixtype="stock" pixname="gtk-find" accel="*Control*g"/>
+	
+        <cmd name="EditReplace" _label="_Replace" _tip="Replace a string"
+          pixtype="stock" pixname="gtk-find-and-replace" accel="*Control*h"/>
+</commands>
+
+<menu>
+
+<submenu name="Edit" _label="_Edit">
+    <placeholder name="EditUndoRedo">
+	<menuitem name="EditUndo" verb=""/>
+	<menuitem name="EditRedo" verb=""/>
+    </placeholder>
+
+    <placeholder name="EditCutCopyPaste">
+        <menuitem name="EditCut" verb=""/>
+        <menuitem name="EditCopy" verb=""/>
+        <menuitem name="EditPaste" verb=""/>
+        <menuitem name="EditDelete" verb=""/>
+	<separator/>
+	<menuitem name="EditSelectAll" verb=""/>
+    </placeholder>
+
+    <placeholder name="EditFindReplace">
+        <menuitem name="EditFind" verb=""/>
+        <menuitem name="EditFindAgain" verb=""/>
+        <menuitem name="EditReplace" verb=""/>
+    </placeholder>
+</submenu>
+
+</menu>
+
+<dockitem name="Toolbar">
+	<toolitem name="TBUndo" _label="Undo" verb="EditUndo"
+		  pixtype="stock" pixname="gtk-undo"/>
+	<toolitem name="TBRedo" _label="Redo" verb="EditRedo"
+		  pixtype="stock" pixname="gtk-redo"/>
+	<separator/>
+
+	<toolitem name="TBCut" _label="Cut" verb="EditCut"
+		  pixtype="stock" pixname="gtk-cut"/>
+	<toolitem name="TBCopy" _label="Copy" verb="EditCopy"
+		  pixtype="stock" pixname="gtk-copy"/>
+	<toolitem name="TBCut" _label="Paste" verb="EditPaste"
+		  pixtype="stock" pixname="gtk-paste"/>
+	<separator/>
+
+	<toolitem name="TBFind" _label="Find" verb="EditFind"
+		  pixtype="stock" pixname="gtk-find"/>
+	<toolitem name="TBReplace" _label="Replace" verb="EditReplace"
+		  pixtype="stock" pixname="gtk-find-and-replace"/>
+	<separator/>
+</dockitem>
+
+</Root>

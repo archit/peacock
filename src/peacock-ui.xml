@@ -1,0 +1,84 @@
+<Root>
+
+<commands>
+        <cmd name="FileNew" _label="_New" _tip="Start a new document"
+	  pixtype="stock" pixname="New" accel="*Control*n"/>
+
+        <cmd name="FileOpen" _label="_Open" _tip="Open a new document"
+	  pixtype="stock" pixname="Open" accel="*Control*o"/>
+
+        <cmd name="FileSave" _label="Save" _tip="Save the current file"
+	   pixtype="stock" pixname="Save" accel="*Control*s"/>
+	
+        <cmd name="FileSaveAs" _label="Save As"
+          _tip="Save the current file with a different name"
+	  pixtype="stock" pixname="Save As" accel="*Shift**Control*s"/>
+
+        <cmd name="FileClose" _label="Close"
+	  _tip="Close the current file" pixtype="stock" pixname="Close"
+	  accel="*Control*w"/>
+
+	<cmd name="FileExit" _label="_Quit" _tip="Quit the program"
+	     pixtype="stock" pixname="gtk-quit" accel="*Control*q"/>
+
+	<cmd name="EditPreferences" _label="Prefere_nces" _tip="Preferences for the Peacock HTML Editor"
+	     pixtype="stock" pixname="gtk-preferences"/>
+
+	<cmd name="HelpAbout" _label="_About" _tip="About this application"
+	     pixtype="stock" pixname="About"/>
+	<cmd name="Help" _label="_Contents" _tip="Help on this application"
+	     pixtype="stock" pixname="Help" accel="F1"/>
+
+</commands>
+
+<menu>
+	<submenu name="File" _label="File">
+		<menuitem name="FileNew" verb=""/>
+		<menuitem name="FileOpen" verb=""/>
+		<menuitem name="FileSave" verb=""/>
+		<menuitem name="FileSaveAs" verb=""/>
+		<menuitem name="FileClose" verb=""/>
+		<separator/>
+		<menuitem name="FileExit" verb=""/>
+	</submenu>
+
+	<submenu name="Edit" _label="_Edit">
+		<placeholder name="EditUndoRedo"/>
+		<placeholder name="EditCutCopyPaste" delimit="top"/>
+		<placeholder name="EditFindReplace" delimit="top"/>
+		<placeholder name="EditMisc" delimit="top"/>
+		<separator/>
+		<menuitem name="EditPreferences" verb=""/>
+	</submenu>
+
+	<submenu name="Insert" _label="_Insert">
+		<placeholder name="Component"/>
+	</submenu>
+
+	<submenu name="Format" _label="For_mat">
+		<placeholder name="FormatParagraph"/>
+	</submenu>
+
+	<submenu name="Help" _label="_Help">
+		<menuitem name="Help" verb=""/>
+		<menuitem name="HelpAbout" verb=""/>
+	</submenu>
+</menu>
+
+<dockitem name="Toolbar" relief="none" homogeneous="1" behaviour="exclusive">
+	<toolitem name="TBNew" _label="New" verb="FileNew"
+		  pixtype="stock" pixname="gtk-new"/>
+	<toolitem name="TBOpen" _label="Open" verb="FileOpen"
+		  pixtype="stock" pixname="gtk-open"/>
+	<toolitem name="TBSave" _label="Save" verb="FileSave"
+		  pixtype="stock" pixname="gtk-save"/>
+	<toolitem name="TBSaveAs" _label="Save As" verb="FileSaveAs"
+		  pixtype="stock" pixname="gtk-save-as"/>
+	<separator/>
+</dockitem>
+
+<status>
+	<item name="main"></item>
+</status>
+
+</Root>

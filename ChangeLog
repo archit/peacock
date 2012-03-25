@@ -1,877 +1,563 @@
-2003-07-02  Archit Baweja  <bighead@users.sourceforge.net>
+2003-09-15  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* src/peacock-file.c (file_save): fixed create permissions bug.
+	* src/file/peacock-file-view.c (peacock_file_view_switch_page_cb): new.
+	(peacock_file_view_sync_views): likewise.
 
-	* src/peacock-file-view.c (peacock_file_view_finalize): new function.
-	(peacock_file_view_class_init): setup destructor.
-	(html_view_url_requested_cb): fix load image bug for unsaved files.
+2003-09-14  Archit Baweja  <bighead@users.sourceforge.net>
 
-2003-07-01  Archit Baweja  <bighead@users.sourceforge.net>
+	* src/file/peacock-file-control.c (peacock_file_control_construct): get
+	remote Bonobo_UIContainer reference and save it.
+	* src/file/peacock-file-view.c (peacock_file_view_new): get and pass on
+	the new Bonobo_UIContainer reference (for the merging of GtkHTML_Editor
+	related menu and toolbar items).
 
-	* src/peacock-file-view.c (html_view_link_clicked_cb): remove call to
-	peaock_file_add_to_mdi()
-	* src/windows-file.c (open_filesel_ok_cb): likewise.
-	* src/main.c (dnd_cb): likewise.
-	(child_create_cb): likewise. And always return NULL. We're usually
-	not done loading the file cuz we are async.
+	* src/file/peacock-file-control-data.c (peacock_file_control_data_new):
+	init new member uiContainer (remote).
+	(peacock_file_control_data_free): free uiContainer.
 
-	* src/main.c (child_remove_cb): don't leak gchar *question.
+	* src/file/peacock-file-find-and-replace.c (peacock_file_find_run): fix
+	.glade file name.
+	(peacock_file_find_and_replace_dialog_find_cb): make Replace All
+	button sensitive again on first successful find.
 
-	* src/peacock-file.c (peacock_file_add_to_mdi): add assertion checks.
+	* src/file/peacock-file-ui.xml: fix placeholder's name.
+	Also add separator before Select All.
 
-2003-06-30  Archit Baweja  <bighead@users.sourceforge.net>
+2003-09-13  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* src/peacock-file.c (file_load): GnomeVFSAsync-ified! All callers
-	changed likewise.
-	(file_load_async_*_cb): new functions.
+	* src/peacock-file-client.c (peacock_file_close): deactivate control
+	explicitly on close (so menu/toolbar items unmerge).
 
-2003-06-27  Archit Baweja  <bighead@users.sourceforge.net>
+	* src/peacock-utils.c (peacock_util_deactivate_bonobo_control): new.
 
-	* src/peacock-file.c (file_save): make sure file doesn exist incase we
-	it exist, but we don't have permission. Just a safety check.
-	(file_load): we were previously returning GnomeVFSResult which was EOF
-	from the while loop above. Now we return GNOME_VFS_OK if everything 
-	went ok, otherwise return the GnomeVFSResult from previous while loop.
-	Fixed file_load() bug.
+	* src/file/peacock-file.c (peacock_file_load): new function.
 
-2003-06-27  Archit Baweja  <bighead@users.sourceforge.net>
+	* src/file/peacock-file-find-and-replace.c (peacock_file_find_and_replace_data_new): init new struct of type PeacockFileFindAndReplaceData.
+	(peacock_file_find_and_replace_data_free): free struct.
+	(peacock_file_find_run): changed accordingly.
+	(peacock_file_find_dialog_setup_signals): likewise.
+	(peacock_file_find_dialog_setup): likewise.
+	(peacock_file_find_dialog_cancel_cb): likewise.
+	(peacock_file_find_dialog_find_cb): likewise.
+	(peacock_file_find_again_run): likewise.
+	(peacock_file_find_and_replace_run): likewise.
+	(peacock_file_find_and_replace_dialog_setup_signals): likewise.
+	(peacock_file_find_and_replace_dialog_setup): likewise.
+	(peacock_file_find_and_replace_dialog_cancel_cb): likewise.
+	(peacock_file_find_and_replace_dialog_replace_all_cb): likewise.
+	(peacock_file_find_and_replace_dialog_replace_cb): likewise.
+	(peacock_file_find_and_replace_dialog_find_cb): likewise.
+	(peacock_file_find_and_replace_dialog_get_data): likewise.
 
-	* configure.in: bumped version to 0.6.1. Version 0.6.1 bug fix version
-	released!
+2003-09-12  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file/peacock-file.c (peacock_file_close_unsaved): removed.
+
+	* src/file/peacock-file-control-data.h: include missing header files.
+
+	* src/file/peacock-file-persist-file.c (peacock_file_persist_file_class_init): isDirty() method is part of Bonobo::Persist, not Bonobo::PersistFile.
+
+	* src/peacock-file-client.c (peacock_file_client_close_unsaved): ask
+	for uri if file has NULL uri.
 	
-2003-06-25  Archit Baweja  <bighead@users.sourceforge.net>
+2003-09-09  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* configure.in: bumped version to 0.6. Version 0.6 released!
+	* src/file/peacock-file-view.c (peacock_file_view_new): g_object_ref
+	the PeacockFile object.
+	(peacock_file_view_class_init): setup destructors.
+	(peacock_file_view_destroy): GtkWidget destructor.
+	(peacock_file_view_finalize): GObject destructor.
+	(PeacockFileViewPrivate): remove the tabWidget member. This is created
+	client side. Add a GtkHTML member.
+	(peacock_file_view_create_tab_widget): removed.
+	(peacock_file_view_tab_widget_close_clicked_cb): removed.
+	(peacock_file_view_file_uri_changed_cb): removed.
+	(peacock_file_view_get_tab_widget): removed.
+	(peacock_file_view_construct): don't connect to the PeacockFile's 
+	uri_changed signal and don't create the tabWidget.
+
+2003-09-08  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file/peacock-persist-file.[ch]: new files added. Build files
+	updated. Code implementing the Bonobo::PersistFile interface.
 	
-2003-06-25  Archit Baweja  <bighead@users.sourceforge.net>
+	* src/file/peacock-file-control-data.[ch]: new files added. Build files
+	updated. A struct holding the various bits and pieces for a 
+	GNOME_Peacock_File control.
+
+	* src/file/peacock-file-control.c (peacock_file_control_construct): use
+	a PeacockFileControlData struct to hold various data in it.
+
+	* src/file/peacock-file-ui.xml: remove Save SaveAs menuitems. These
+	are container side. And some other changes to make work with
+	peacock-ui.xml.
+
+	* src/file/Makefile.am (EXTRA_DIST): add peacock-file-marshal.list.
+
+2003-09-07  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* configure.in: bumped version to 1.9.1. Peacock v1.9.1 released!
 	
-	* src/peacock-file.c (file_load): return GnomeVFSResult not gboolean.
-	All callers changed likewise.
-	
-	* src/find-and-replace.c (find_and_replace_dialog_replace_cb):
-	unsensitive the "replace" button.
+	* TODO: updated.
+	* NEWS: likewise.
+	* Makefile.am: include intltool-*.in utils in EXTRA_DIST.
 
-	* src/peacock-file.c (file_save): fixed save buy. apparently
-	gnome_vfs_open_uri, doesn't "create" the file if it previously didn't
-	exist. So we have to manually call gnome_vfs_create_uri
-	(HINT: RFE GnomeVFS).
-
-2003-02-17  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* configure.in (AC_OUTPUT): Add intl/Makefile.
-
-2003-02-17  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* Makefile.am (SUBDIRS): Remove intl.
-
-2003-02-17  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* Makefile.am (SUBDIRS): Remove intl.
-	* configure.in (AC_OUTPUT): Remove intl/Makefile.
-
-2003-02-17  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* Makefile.am (SUBDIRS): Add intl.
-	* configure.in (AC_OUTPUT): Add intl/Makefile.
-	(AM_GNU_GETTEXT_VERSION): Bump to 0.11.4.
-
-2003-02-17  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* configure.in (AM_GNU_GETTEXT_VERSION): Bump to 0.11.4.
-
-2003-01-10  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* configure.in (AC_OUTPUT): Add intl/Makefile.
-
-2003-01-10  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* Makefile.am (SUBDIRS): Remove intl.
-	* configure.in (AC_OUTPUT): Remove intl/Makefile.
-
-2003-01-10  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* macros/autogen.sh: run old versions of automake (1.4) and aclocal, 
-	so build files work on RH 8.0
-
-2003-01-10  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* Makefile.am (SUBDIRS): Add intl.
-	* configure.in (AC_OUTPUT): Add intl/Makefile.
-
-2003-01-10  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* po/Makevars: new file. Updating build files so that peacock compiles
-	on RH 8.0
-
-2002-09-12  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-file.c (peacock_file_class_init): fix finalize bug. Now
-	the finalize function works fine as a destructor. yay!
-
-2002-09-09  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-file.c (peacock_file_set_uri): canonicalize local paths.
-
-2002-09-08  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/main.c (dnd_cb): call peacock_file_add_to_mdi.
-	(child_create_cb): check the return value of peacock_file_new_from_file
-
-	* src/peacock-file.c (peacock_file_add_to_mdi): new function. Checks
-	if file is not NULL, and adds it to the GnomeMDI object.
-
-2002-09-03  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/windows-file.c (create_open_uri_dialog): new function. For the
-	migration to GnomeVFS.
-	(open_uri_dialog_ok_cb): likewise.
-
-	* src/callbacks.c (open_cb): call create_open_uri_dialog now.
-
-	* src/find-and-replace.c (find_and_replace_dialog_get_data): free 
-	previous contents of replace_str. Fix leak.
-
-	* src/peacock-file-view.c (delete_text_cb): fix leak. I was ignoring
-	the changed GString pointer returned by g_string_* API.
-	(insert_text_cb): likewise.
-	(html_view_url_requested_cb): made it asynchronous. I love GnomeVFS :-)
-	(url_requested_async_read_cb): new function.
-	(url_requested_async_open_cb): likewise.
-	(url_requested_async_close_cb): likewise.
-	(html_view_link_clicked_cb): new function.
-
-2002-09-02  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-file-view.c (html_view_url_requested_cb): shifted from
-
-	* src/callbacks-gtkhtml.[ch]: removed. Build files updated.
-
-2002-09-01  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-file.c (file_load): migrated to GnomeVFS.
-	(file_save): likewise.
-	(peacock_file_set_name): renamed to peacock_file_set_uri. likewise.
-	(peacock_file_get_name): renamed to peacock_file_get_uri. likewise.
-
-	* src/callbacks-gtkhtml.c (html_view_url_requested_cb): GnomeVFS-ied!
-	Also, now it handles url's relative to the file.
-	
-	* src/main.c (main): initialize GnomeVFS. We're going to use this baby
-	every where now :-).
-
-	* configure.in: added check for GnomeVFS. update makefile accordingly.
-
-2002-08-28  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/find-and-replace.c (find_and_replace_dialog_setup): new function.
-	(find_and_replace_dialog_setup_signals): likewise.
-	(create_find_and_replace_dialog): likewise.
-	(find_and_replace_dialog_replace_all_cb): likewise.
-	(find_and_replace_dialog_find_cb): likwise.
-	(find_and_replace_dialog_replace_cb): likewise.
-
-2002-08-26  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/find-and-replace.c (find_dialog_get_data): new function.
-	(find_dialog_setup): likewise.
-	(find_dialog_setup_signals): likewise.
-	(find_again_run): likewise.
-
-2002-08-23  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-file.c (peacock_file_find_text): accept values for
-	position of start of search and case sensitive search.
-
-	* src/callbacks.c (find_cb): new function.
-	(find_again_cb): likewise.
-	(replace_cb): likewise.
-
-	* src/dialogs/dialogs.glade[.h]: new files added. General dialogs like
-	Find and/or Replace etc.
-
-	* src/find-and-replace.[ch]: new files added. 
-	
-2002-08-21  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-file.c (peacock_file_new_from_file): fix GString leak.
-
-2002-08-18  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/windows-file.c (save_as_filesel_ok_cb): on Save As, update label.
-
-	* src/peacock-file.c (peacock_file_finalize): new function. Cleans up
-	and frees memory (plugs leaks) on closing a PeacockFile.
-
-2002-08-03  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* configure.in: don't write peacock.desktop, peacock.schemas,
-	peacock.pong files, intltool does that for us.
-
-2002-07-15  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* configure.in: bumped version to 0.5. Version 0.5 released!
-
-2002-07-11  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-file-view.c (peacock_file_view_select_all): new function.
-
-	* src/peacock-file.c (file_create_view): insert template elements.
-
-2002-07-10  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/dnd-helper.c (drag_data_received_cb): fixed multiple drops bug.
-	Copied new version from anjuta.
-
-2002-07-08  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/html.c (html_tag_prepare_meta_author_info_string): new function.
-	(html_tag_prepare_meta_generator_string): likewise.
-
-	* src/peacock-file.c (peacock_file_new_view): if view already exists,
-	return that.
-
-	* peacock.spec.in: install peacock.schemas
-
-	* src/main.c (init_mdi): gconf-ized.
-	(app_created_cb): likewise.
-
-2002-07-05  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/prefs.c (prefs_html_toolbars_refresh_cb): new function.
-	(prefs_show_dialog): new function.
-
-	* src/callbacks.c (view_*_cb): save the state in the GConf database.
-
-2002-07-03  Archit Baweja <bighead@users.sourceforge.net>
-	
-	* src/toolbars.c (html_toolbars_refresh): new function.
-	(toolbar_main_get, toolbar_html_get): likewise.
-	(basic1_toolbar_uiinfo): merged basic #1 and basic #2 toolbars.
-
-2002-06-30  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/peacock-tl.c (peacock_tl_hide): new function.
-	(peacock_tl_show): likewise.
-
-	* src/prefs.c (prefs_init_callbacks): new function.
-
-2002-05-20  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* peacock.spec.in: updated.
-
-2002-05-18  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* doc/ : major docs fixage docs. Including new docs, screenshots etc.
-			
-2002-05-16  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/prefs.c (prefs_init): new function.
-
-	* src/main.c (init_mdi): new function.
-	(parse_command_line): new function.
-
-	* src/callbacks.c (prefs_cb): implemented.
-
-2002-05-15  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/main.c (main): don't hide inbuilt file browser.
-
-	* src/peacock-file.c (peacock_file_set_name): free previous file->name.
-	
-	* macros/autogen.sh: updated for intltool.
-	Makefile.am: translate .desktop file. 
-
-	* peacock.pong.in: new file added. For GConf based preferences.
+2003-09-07  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/peacock-window.c (verb_FileOpen_cb): likewise check for return
+	value of NULL from peacock_file_new and not add to MDI in case it is.
+	* src/peacock-file-client.c (peacock_file_open): check for uri == NULL.
+	returned by peacock_util_get_uri (in case of Cancel etc). New file is
+	not opened then.
+
+2003-09-06  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/peacock-file-client.c (peacock_file_close): new.
+	(peacock_file_client_close_unsaved): new.
+	* src/peacock-window.c (verb_FileClose_cb): implemented.
+
+	* src/peacock-types.h: new file added. Bit of a header file circular
+	dependency problem creeping up. This way it is tackled.
+
+	* src/peacock-file-client.c (peacock_file_save_as): new.
+	(peacock_file_client_update_tab_widget): new.
+	(peacock_file_client_create_tab_widget): save pointer to GtkLabel.
+	* src/peacock-window.c (verb_FileSaveAs_cb): implemented.
+
+2003-09-05  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/peacock-file-client.c (peacock_file_save): new.
+	(peacock_file_client_save): new.
+	* src/peacock-window.c (verb_FileSave_cb): implemented.
+
+	* src/peacock-file-client.c (peacock_file_open): new.
+	(peacock_file_client_load): new.
+	* src/peacock-window.c (verb_FileOpen_cb): implemented.
+
+	* src/peacock-file-client.[ch]: new files added. Build files updated.
+	(peacock_file_client_init): initialize a new PeacockFileClient struct.
+	(peacock_file_client_free): free a PeacockFileClient struct. new.
+	(peacock_file_new): new function.
+	(peacock_file_client_create_tab_widget): new
+	(peacock_file_client_tab_widget_close_clicked_cb): new.
+	* src/peacock-window.c (verb_FileNew_cb): implemented.
+
+	* src/peacock-ui.xml: changes to placeholders so GNOME_GtkHTML_Editor's
+	merged menus show up in the right place.
+
+	* src/peacock-mdi.c (peacock_mdi_add_file): changed to use
+	PeacockFileClient.
+	(peacock_mdi_remove_file): likewise.
+
+2003-09-04  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file/GNOME_Peacock_File.idl: new idl file. Initial IDL interface
+	to the PeacockFile bonobo object.
+
+	* src/peacock-utils.c (peacock_util_activate_bonobo_control): new.
+
+2003-09-03  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/peacock-mdi.c (peacock_mdi_add_file): changed to reflect changes
+	in code organisation. Manages BonoboControls.
+	(peacock_mdi_get_current_view): removed.
+
+	* Today I moved lots of stuff around. I'll briefly summarize the 
+	changes. Moved PeacockMDI code to peacock-2/src/ as well as
+	PeacockWindow etc form peacock-2/src/shell/.
+	* Moved PeacockFile and PeacockFileView code in peacock-2/src/file/.
+	This will hopefully turn into a good BonoboControl. Till then we
+	just use the GNOME_GtkHTML_Editor control.
+
+2003-09-01  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_remove_file): set the
+	current_file correctly after a remove.
+
+	* src/file-manager/peacock-mdi-control.c
+	(peacock_mdi_control_file_loaded_cb): new callback.
+	* src/file-manager/peacock-file.c (peacock_file_class_init): setup
+	2 new signals, "loaded" and "saved".
+	(peacock_file_load_async_close_cb): emit "loaded" signal with result
+	of operation.
+	(peacock_file_save_async_close_cb): emit "saved" signal with result
+	of operation.
+	(peacock_file_close_post_saved_cb): new callback. Lets me get rid
+	of ugly closed_unsaved_flag hack.
+
+2003-08-31  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/html-toolbars/peacock-html-toolbars-control.c (peacock_html_toolbars_control_setup_event_source): removed.
+
+	* src/file-manager/peacock-mdi-control.c (verb_EditCut_cb): show
+	status messages.
+	(verb_EditCopy_cb, verb_EditPaste_cb, verb_EditDelete_cb): likewise.
+	* src/shell/peacock-shell-ui.xml: add the statusbar.
+
+	* TODO: updated.
+
+	* src/file-manager/peacock-mdi-control.c (verb_EditReplace_cb): impl.
+	* src/file-manager/peacock-file-find-and-replace.c
+	(peacock_file_find_and_replace_run): new function.
+	(peacock_file_find_and_replace_dialog_setup): likewise.
+	(peacock_file_find_and_replace_dialog_setup_signals): likewise.
+	(peacock_file_find_and_replace_dialog_find_cb): likewise.
+	(peacock_file_find_and_replace_dialog_replace_cb): likewise.
+	(peacock_file_find_and_replace_dialog_replace_all_cb): likewise.
+	(peacock_file_find_and_replace_dialog_cancel_cb): likewise.
+	(peacock_file_find_and_replace_dialog_get_data): likewise.
+
+	* src/file-manager/peacock-mdi-control.c (verb_EditFindAgain_cb): impl.
+	* src/file-manager/peacock-file-find-and-replace.c
+	(peacock_file_find_again_run): new function.
+
+2003-08-30  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-mdi-control.c (verb_EditFind_cb): impl.
+	* src/file-manager/peacock-file.c (peacock_file_find_and_select):
+	new function.
+	* configure.in: check for libglade-2.0 minimum version 2.0.1
+	* src/file-manager/peacock-file-find-and-replace.[ch]: new files added.
 	Build files updated.
-
-2002-05-02  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/about.c (create_about_dialog): changed my email address and
-	copyright years.
-
-2002-05-01  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* src/Makefile.am: added $GTKHTML_CFLAGS and $LIBGLADE_CFLAGS
-	to $INCLUDES. Funny it used to work before without it. Fixed
-	#496475 submitted by nok
-
-2002-04-03  Archit Baweja  <bighead@users.sourceforge.net>
-
-	* configure.in: fixed GtkHTML check. But I haven't tested it. Should
-	work though.
-
-2001-10-03  Archit Baweja  <bighead@users.sf.net>
-
-	* configure.in: bumped version to 0.4. Version 0.4 released!
-
-2001-09-05  Archit Baweja  <bighead@crosswinds.net>
-
-	* TODO: structured+updated it a bit.
-
-2001-09-04  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/main.c (file_browser_open_file_cb): new function.
-
-2001-08-28  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c (view_filebrowser_cb): new function.
-
-	* src/main.c (app_created_cb): dock the PeacockFileBrowser too.
-
-	* src/menus.c (settings_menu_uiinfo): add toggle items for above.
+	(peacock_file_find_run): new.
+	(peacock_file_find_dialog_setup_signals): new.
+	(peacock_file_find_dialog_setup): new.
+	(peacock_file_find_dialog_cancel_cb): new.
+	(peacock_file_find_dialog_find_cb): new.
+	(peacock_file_find_dialog_get_data): new.
+	* src/file-manager/peacock-file-utils.c
+	(peacock_file_utils_glade_dialog_new): new.
+	* src/file-manager/Makefile.am (INCLUDES): define GLADEDIR.
+	* src/file-manager/dialogs/dialogs.glade: new .glade file dialogs.
+	Build files updated.
 	
-	* src/peacock-file-browser.[ch]: new files added. Build files updated.
-
-2001-08-12  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks-gtkhtml.[ch]: new files added. Build files updated.
-	(html_view_url_requested_cb): new function.
-
-2001-08-11  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/peacock-file.c (file_load): forgot to fclose () I don't know
-	since when! So I put them finally where required.
+	* src/file-manager/peacock-mdi.c (peacock_mdi_get_current_view): new.
 	
-	* src/peacock-file-view.c (switch_page_cb): new function.
-	(peacock_file_view_sync_html_view): new function.
+	* TODO: new file. Thought I'd need one now (after I sent that email
+	to gnome-love@gnome.org)
 
-2001-07-05  Archit Baweja  <bighead@crosswinds.net>
+2003-08-27  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* configure.in: bumped version to 0.3. Version 0.3 released!
+	* src/file-manager/peacock-file.c (peacock_file_delete_selection): new.
+	(peacock_file_cut_selection, peacock_file_copy_selection): likewise
+	(peacock_file_paste_selection, peacock_file_select_all): likewise.
+	(peacock_file_set_selection): new. Maybe I should send this for
+	inclusion into the GtkTextBuffer API. 
 
-	* peacock.spec.in: install the glade files too.
+	* src/file-manager/peacock-mdi-control.c (verb_EditCut_cb): impl.
+	(verb_EditCopy_cb, verb_EditPaste_cb, verb_EditDelete_cb ): likewise.
+	(verb_EditSelectAll_cb): likewise.
 
-2001-06-20  Archit Baweja  <bighead@crosswinds.net>
+	* src/file-manager/peacock-file.c (peacock_file_undo): new.
+	(peacock_file_redo): likewise.
+	* src/file-manager/peacock-mdi-control.c (verb_EditUndo_cb): new.
+	(verb_EditRedo_cb): likewise.
+	(verb_EditDelete_cb): new.
+	(verb_EditClear_cb): renamed to verb_EditDelete_cb.
+	* src/file-manager/peacock-mdi-ui.xml: add actions and menu/toolbar
+	item definitions for Undo/Redo. Remove Close, Clear, Select All
+	from toolbar definition. And generally make it more HIG-complaint.
 
-	* src/html.c (html_tag_insert): removed.
+	* src/file-manager/peacock-file-view.c (peacock_file_view_construct): 
+	set editable if not readonly else uneditable.
+	* src/file-manager/peacock-file.c (peacock_file_init): initialize new
+	member, gboolean readonly.
 
-2001-06-19  Archit Baweja  <bighead@crosswinds.net>
+2003-08-26  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* src/main.c (main): added popt support.
+	* src/file-manager/peacock-file.c (peacock_file_load_async_close_cb):
+	set modified to FALSE. call gtk_sourcebuffer_end_not_undoable_action.
+	(peacock_file_save_async_open_cb): use gtk_text_buffer_get_bounds to
+	get start and end GtkTextIter's.
+	(peacock_file_load_async_open_cb): call gtk_source_buffer_begin_not_undoable_action.
 
-	* src/windows-html.c (*_dialog_ok_cb): if blank tag, don't insert the
-	after tag.
-	(create_insert_basefont_dialog): got the basefont dialog working. It
-	was looking for the wrong widget name.
-	(basefont_dialog_ok_cb): return a blank on value of size being 0.
 
-2001-06-16  Archit Baweja  <bighead@crosswinds.net>
+	* src/file-manager/peacock-file-view.c (peacock_file_view_tab_widget_close_clicked_cb): use peacock_file_close not peacock_mdi_remove_file.
 
-	* src/peacock-file-view.c (peacock_file_view_insert_text): didn't 
-	record the changes in PeacockFile. fixed bug.
+	* src/file-manager/peacock-mdi-control.c (verb_FileClose_cb): impl.
 
-2001-06-08  Archit Baweja  <bighead@crosswinds.net>
+	* src/file-manager/peacock-file-utils.c (peacock_file_utils_save_unsaved_response): new
 
-	* src/windows-html.c: migration to libglade complete.
+	* src/file-manager/peacock-file.c (peacock_file_close): impl
+	(peacock_file_close_unsaved): new function. Check for save before
+	closing modified file.
+	(peacock_file_is_modified): new.
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_remove_file): impl.
+
+2003-08-25  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-file.c (peacock_file_save_as): return on
+	Cancel from Save As dialog. Fixes "Save As Dialog Cancel" bug.
+
+	* src/file-manager/peacock-file-view.c
+	(peacock_file_view_get_file): new.
+	* src/file-manager/peacock-mdi.c (peacock_mdi_switch_page_cb): new.
+	Fixes bug.
+
+	* src/file-manager/peacock-file-view.c
+	(peacock_file_view_file_uri_changed_cb): update view's tab's label
+	on emission of "uri-changed" for its PeacockFile.
+	* src/file-manager/peacock-file.c (peacock_file_class_init): setup
+	new "uri-changed" signal, emitted on "Save As".
+	(peacock_file_set_uri): emit "uri_changed" signal at end.
+	* src/file-manager/peacock-file-marshal.list: new signal marshaller
+	input file. Build files updated.
+
+	* src/file-manager/peacock-file-view.c
+	(peacock_file_view_create_tab_widget): renamed from
+	peacock_mdi_create_tab_widget. All callers changed.
+	(peacock_file_view_get_tab_widget): supplements above.
+	(peacock_file_view_tab_widget_close_closed_cb): new callback.
+
+2003-08-21  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-mdi-control.c (verb_FileSave_cb): impl.
+	(verb_FileSaveAs_cb): impl.
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_create_tab_widget_for_file): convinience function. Will add code to put a small "X" pixbuf, so user's can
+	close that file from it.
+	(peacock_mdi_raise_added_file_view): new function. This raises' the
+	last added file, giving time for Gtk+ to draw the view, thats why its
+	in a g_idle_add ().
+
+	* src/file-manager/peacock-file.c (peacock_file_save): fix check for
+	valid URI.
+	(peacock_file_save_async_write_cb): use save_async_close_cb, not its
+	load counterpart. Remnant of my cut-copy-paste code from load code.
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_new): return the previous
+	created PeacockMDI if one is there.
+
+	* src/file-manager/Makefile.am (INCLUDES): add $(WARN_CFLAGS) so that 
+	we pass -Wall ets when compiling.
+	* src/html-toolbars/Makefile.am (INCLUDES): likewise.
+	* src/shell/Makefile.am (INCLUDES): likewise.
 	
-2001-04-10  Archit Baweja  <bighead@crosswinds.net>
+2003-08-19  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* src/support.c (lookup_widget_libglade): new function.
-	(peacock_glade_dialog_new): new function.
+	* src/file-manager/peacock-file-view.c (peacock_file_view_construct):
+	show line numbers.
+	(peacock_file_view_add_view): new.
+	(peacock_file_view_construct): use above.
+
+2003-08-18  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-file.c (peacock_file_save): return void.
+	(peacock_file_save_as): return void. We are using GnomeVFSAsync.
+	(peacock_file_construct): new.
+
+	* src/file-manager/peacock-file.c (peacock_file_get_uri): test for
+	file->priv->uri == NULL.
+	(peacock_file_set_uri): likewise so we can free old uri.
+	(peacock_file_save, peacock_file_save_async, peacock_file_save_as,
+	 peacock_file_save_async_*_cb): new.
+
+	* src/file-manager/peacock-file-utils.c
+	(peacock_file_utils_show_ui_error): new.
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_get_current_file): new.
+
+	* src/file-manager/peacock-mdi-control.c (verb_FileNew_cb): impl.
+	(verb_FileOpen_cb): likewise.
+
+2003-08-16  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-file-utils.[ch]: new files added. Build
+	files updated.
+	(peacock_file_utils_get_local_uri): new function.
+	(peacock_file_utils_get_uri): likewise.
+
+2003-08-13  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_new): keep a global
+	reference to the mdi object.
+	(peacock_mdi_get): new function.
+
+	* src/file-manager/peacock-file.c (peacock_file_[get/set]_uri): new.
+	(peacock_file_new_from_uri): likwise.
+	(peacock_file_load_async_*_cb): likewise.
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_add_file): change calls
+	to g_return_if_fail to g_return_*val*_if_fail.
+
+2003-08-11  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-mdi.c (peacock_mdi_add_file): new function.
+	(peacock_mdi_remove_file): likewise.
+
+	* src/file-manager/peacock-file.[ch]: new files added. Initial code for
+	PeacockFile object. Build files updated.
+
+	* src/file-manager/peacock-file-view.[ch]: new files added. Initial
+	code for PeacockFileView widget. Build files updated.
+
+2003-08-09  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/html-toolbars/peacock-html-toolbars-control.c (peacock_html_toolbars_control_setup_property_bag): new function. Sets up property bag from
+	PeacockHTMLToolbars' properties.
+	(peacock_html_toolbars_control_[get/set]_prop): new functions.
+
+	* src/html-toolbars/peacock-tl.c (peacock_tl_add): use glib safe
+	GUINT_TO_POINTER cast macro.
+	(peacock_tl_[hide/show]_toolbar): iteration for-loop fixed and use
+	glib safe GPOINTER_TO_UINT cast macro.
+
+	* src/html-toolbars/tests/makefile.tests (gtk-test): optimizations OFF
+	debug-ing symbols ON and binary output name change to
+	htmlbar-test-gtk-container.
+
+2003-08-06  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/html-toolbars/peacock-html-toolbars-control.c (peacock_html_toolbars_control_new_html_tag_ready_cb): grab the newly create html tag from the 
+	PeacockHTMLToolbars widget. new callback.
+
+	* src/html-toolbars/peacock-html-toolbars.c: have an associative array
+	of gbooleans for representing the visible state of the various
+	toolbars. Makes the get/set prop code efficient (or easy for me the
+	lazy hacker).
+
+	* src/html-toolbars/peacock-tl.c (peacock_tl_add): accept an extra
+	"toolbar_id" gint parameter, so the following functions work.
+	(peacock_tl_[show/hide]_toolbar): new utility functions.
+
+	* src/html-toolbars/peacock-html-toolbars.h (IS_PEACOCK_HTML_TOOLBARS):
+	formerly mistyped as IS_PEACOCK_IS_HTML_TOOLBARS.
+
+2003-07-30  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/html-toolbars/tests/makefile.tests: makefile for tests added.
+	I wonder why I didn't go the regular Makefile.am way.
+
+	* src/html-toolbars/tests/test-gtk-container.c: new Gtk tester for
+	PeacockHTMLToolbars widget.
+
+2003-07-29  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/html-toolbars/peacock-html-toolbars-marshal.list: new signal
+	marshaller input file. Build files updated.
+
+	* src/html-toolbars/peacock-html-toolbars.c
+	(peacock_html_toolbars_init): initialize private data members.
+	(peacock_html_toolbars_[get/set]_property): get/set properties. 
+	(peacock_html_toolbars_class_init): install signals and properties.
+
+	* configure.in (LIBGNOMEUI_REQUIRED): bumped version requirement to 
+	2.2.0. Same for LIBBONOBOUI_REQUIRED.
+
+2003-07-25  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/html-toolbars/peacock-html-toolbars-control.[ch]: separating
+	the bonobo stuff from the actual GtkWidget. Build files updated.
+
+2003-07-24  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/shell/peacock-window.c (peacock_window_construct_contents): new
+	function. We pack the PeacockHTMLToolbars and PeacockMDI controls
+	(peacock_window_activate_contents): new functions. Explicitly activate
+	each control.
+
+2003-07-23  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* configure.in: build html-toolbars control too!
+
+	* src/html-toolbars/icons/*.xpm: pixmaps copied verbatim from peacock-1
+
+	* src/html-toolbars/peacock-html-toolbars.[ch]: initial code for a 
+	bonobo control using PeacockTL. new.
+
+	* src/html-toolbars/support.[ch]: support code for PeacockTL. new.
+
+	* src/html-toolbars/GNOME_Peacock_HTML_Toolbars.server.in.in: new.
+
+	* src/html-toolbars/peacock-tl.c (peacock_tl_add_from_array): new
+	function.
+
+	* src/file-manager/peacock-mdi-control.h: function prototype was
+	missing parameters. Fixed.
+
+
+2003-07-22  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/html-toolbars/peacock-tl.[ch]: initial code copied from peacock-1
+	for HTML toolbars.
+
+	* src/shell/peacock-window.c (verb_HelpAbout_cb): display the logo.
+	(peacock_window_delete_event_cb): delete_event handler added.
+
+	* src/shell/Makefile.am: install rule for peacock-logo.png
 	
-2001-04-08  Archit Baweja  <bighead@crosswinds.net>
+	* peacock-logo.png: a temporary logo for the about dialog box.
 
-	* configure.in: define PACKAGE_GLADE_DIR.
+2003-07-09  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* acconfig.h: likewise.
+	* src/file-manager/peacock-mdi.c: new files added. Initial code for
+	PeacockMDI.
 
-2001-04-07  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/html.c (html_tag_prepare_selct_string): renamed to
-	html_tag_prepare_select_string.
-
-	* src/windows-html.c (create_insert_selct_dialog): renamed to 
-	create_insert_select_dialog.
-	(selct_dialog_ok_cb): likewise to select_dialog_ok_cb.
-
-2001-04-06  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (create_insert_*_dialog): changed accordingly for
-	MDI and libglade migration.
-	
-	* src/callbacks-html.c (*_cb): likewise.
-
-2001-04-05  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c (save_yourself_cb, die_cb): removed.
-
-2001-04-04  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/main.c: made the mdi object a global. Ah! thats nice. 
-	Widespread changes, ofcourse.
-	
-	* configure.in: added check for libglade. update makefile accordingly.
-
-	* src/main.c (main): init glade support.
-
-2001-04-04  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/dialogs: new dir. Holds glade files for various dialogs.
-	dialogs-html.glade[.h]: new files added.
-	Makefile.am: likewise.
-
-2001-03-24  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/peacock-file.c (file_load): fixed loading bug.
-
-2001-03-22  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c (view_htmlbars_cb): changes for MDI.
-	(view_maintbar_cb): likewise.
-
-2001-03-21  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/toolbars.c (create_toolbar_main): accepts a GtkObject * to the
-	main mdi object.
-	(create_html_toolbars): likewise.
-	
-	* configure.in: added check for GtkHTML. updated makefile to use
-	$(GTKHTML_LIBS)
-	
-	* src/main.c (mdi_delete_event_cb): removed.
-
-2001-03-01  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/peacock-file-view.c (peacock_file_view_new): save a pointer to
-	the PeacockFile being represented.
-
-	* src/peacock-file-view.h: removed pointer to PeacockFile.
-
-	* src/peacock-file.h (IS_PEACOCK_FILE_SAVED): new utility macro.
-	(PeacockFile): view is now of GtkWidget type.
-
-	* src/main.c (dnd_cb): new function.
-
-2001-02-28  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/peacock-file-view.c (peacock_file_view_construct): removed.
-
-	* src/callbacks.c (cut_cb): fixed cast problem.
-	(copy_cb, paste_cb, clear_cb, select_all_cb): likewise.
-
-2001-02-24  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/peacock-file-view.[ch]: new files added. Build files updated.
-	The View of PeacockFile.
-
-	* src/callbacks.c (preview_cb): removed.
-	(new_cb, open_cb, save_cb, save_as_cb): changed for MDI support.
-	(close_cb, quit_cb, print_cb, print_cb): likewise.
-	(cut_cb, copy_cb, paste_cb, clear_cb, select_all_cb): likewise.
-
-	* src/menus.c (file_menu_uiinfo): removed Preview option.
-
-	* src/main.c (child_remove_cb, app_created_cb): new.
-		
-2001-02-23  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-file.c (create_*_filesel): changed for MDI support.
-	(*_filesel_ok_cb): likewise.
-	(save_q_cb_*): removed. 
-
-2001-02-16  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/file-io.[ch]: removed. Updated required files accordingly.
-		
-2001-01-27  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/menus.[ch]: new files added. Contains the menu's GnomeUIInfo
-	definitions from windows-main.c. Build files updated.
-	(files_menu_uiinfo): new GnomeUIInfo struct.
-	(main_menu_uiinfo): include the above struct.
-
-	* src/main.c (mdi_destroy_cb): new function.
-	(mdi_delete_event_cb): likewise.
-
-2001-01-25  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/peacock-file.[ch]: new files added. A GnomeMDIChild derivative.
-	Added for MDI support. 
-
-	* src/windows-main.[ch]: removed. Build files updated. All other files
-	which "#include" the header file, also updated.
-
-2000-10-22  Archit Baweja  <bighead@crosswinds.net>
-
-	* dnd-helper.[ch]: files added. DND support for Peacock. Contributed
-	by José Antonio Caminero Granja. Updated build files.
-	(dnd_drop_init): new function. public.
-	(drag_data_received_cb): likewise. private.
-	
-2000-10-12  Archit Baweja  <bighead@crosswinds.net>
-
-	* Makefile.am (EXTRA_DIST): include peacock.spec in dist as well.
-
-2000-09-23  Archit Baweja  <bighead@crosswinds.net>
-
-	* HACKING: updated.
-
-	* peacock.spec.in: file added. Updated configure.in to output the .spec
-	file and Makefile.am to include it in dist.
-
-2000-09-20  Archit Baweja  <bighead@crosswinds.net>
-
-	* configure.in: bumped version to 0.2. Version 0.2 released!
-
-2000-09-13  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (image_dialog_ok_cb): added code to signal error
-	on missing SRC string in the statusbar.
-
-2000-09-12  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (td_dialog_ok_cb): forgot to free the "extra" string.
-	(th_dialog_ok_cb): likewise.
-
-2000-08-23  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/html.c (html_tag_prepare_image_string): used to make <image>.
-	changed to <img>.
-
-2000-08-20  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (color_set_cb): new function.
-
-2000-08-18  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (href_dialog_ok_cb): use gtk_editable_get_chars ()
-	instead of gtk_entry_get_text (). Added g_free () calls too.
-	(mailto_dialog_ok_cb): likewise.
-	(anchor_dialog_ok_cb): likewise.
-	(comment_dialog_ok_cb): likewise.
-
-2000-08-17  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (image_dialog_ok_cb): some changes due to an
-	accidental deletion of code.
-	(create_insert_comment_dialog): likewise.
-
-2000-08-15  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/html.c (html_tag_prepare_image_string): cleaned up code. Added
-	checks for blank fields.
-
-2000-08-14  Archit Baweja  <bighead@crosswinds.net>
-
-	* README: updated.
-
-2000-08-11  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (create_insert_check_box_dialog): new function.
-	(create_insert_radio_btn_dialog): likewise.
-	(check_box_dialog_ok_cb): likewise.
-	(radio_btn_dialog_ok_cb): likewise.
-
-	* src/html.c (html_tag_prepare_check_box_string): new function.
-	(html_tag_prepare_radio_btn_string): likewise.
-	
-2000-08-10  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/html.c (html_tag_prepare_*_string): fixed bug when it returned
-	"" instead of g_strdup ("").
-	(html_tag_prepare_*_string): added check for blank fields.
-
-2000-08-07  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/html.c (html_tag_insert): uses GtkEditable::current_pos
-	instead of GtkText::cursor_mark.index to get current position.
-	
- 	* src/windows-html.c (create_insert_tb_dialog): new function.
-	(create_insert_tr_dialog): likewise.
-	(create_insert_th_dialog): likewise.
-	(create_insert_td_dialog): likewise.
-	(tb_dialog_ok_cb): likewise.
-	(tr_dialog_ok_cb): likewise.
-	(th_dialog_ok_cb): likewise.
-	(td_dialog_ok_cb): likewise.
-
-	* src/html.c (html_tag_prepare_tb_string): new function.
-	(html_tag_prepare_tr_string): likewise.
-	(html_tag_prepare_th_string): likewise.
-	(html_tag_prepare_td_string): likewise.
-	
-2000-08-06  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.c (create_insert_form_dialog): new function.
-	(create_insert_tarea_dialog): likewise.
-	(create_insert_selct_dialog): likewise.
-	(create_insert_entry_dialog): likewise.
-	(form_dialog_ok_cb): likewise.
-	(tarea_dialog_ok_cb): likewise.
-	(selct_dialog_ok_cb): likewise.
-	(entry_dialog_ok_cb): likewise.
-	
-	* src/html.c (html_tag_prepare_form_string): new function.
-	(html_tag_prepare_tarea_string): likewise.
-	(html_tag_prepare_selct_string): likewise.
-	(html_tag_prepare_entry_string): likewise.
-		
-2000-07-16  Unknown Coder
-
-	* src/main.c (main): SM code added.
-	src/windows-main.c (create_Peacock): likewise.
-	src/callbacks.c (quit_cb): likewise.
-	
-	* src/windows-main.c (restore_geometry): new function.
-	(save_geometry): new function.
-
-	* src/callbacks.c (save_yourself_cb): new function.
-	(die_cb): new function.
-	
-2000-06-08  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/toolbars.c (headings_toolbar_uiinfo): new toolbar definition.
-
-2000-05-23  Archit Baweja  <bighead@crosswinds.net>
-
-	* NEWS: updated and changed format.
-
-	* src/html.c: code beautification.
-
-2000-05-21  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-file.c (save_q_cb_quit): confirms action for quiting.
-
-	* src/windows-main.c: code beautification and comment-ifing.
-	(create_preview): replaced ok button with close button.
-	(on_Peacock_delete_event): checks for unsaved file before quit-ing Q.
-
-	* src/callbacks.c (quit_cb): likewise.
-	
-2000-05-18  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/toolbars.c (basic1_toolbar_uiinfo): split from
-	basic_toolbar_uiinfo. Callers changed.
-	(basic2_toolbar_uiinfo): likewise.
-
-2000-05-17  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.h: prototypes of callbacks removed.
-
-	* src/windows-html.c: removed "#include <windows-html.h>". Callbacks
-	moved in front of required functions.
-
-	* src/windows-html.c: Removed use of global variables. Changed callers.
-	(create_insert_*_dialog): now all get pointer to main app widget. Also,
-	major code clean-ups.
-	(on_insert_*_dialog_ok_clicked): all renamed to *_dialog_ok_cb.
-	
-	* src/callbacks-html.c (tbar_lists_button_*_cb): new callbacks.
-	(tbar_forms_button_*_cb): likewise.
-	(tbar_tables_button_*_cb): likewise.
-	
-	* src/toolbars.c (forms_toolbar_uiinfo): new GnomeUIInfo definition.
-	(tables_toolbar_uiinfo): likewise.
-	(lists_toolbar_uiinfo): completed the Lists html toolbar.
-	(create_html_toolbars): added the 'Lists' 'Forms' and 'Tables' html
-	toolbar to the HTML Toolbars List.
-
-	* pixmaps/Makefile.am (EXTRA_DIST): new icons for 'Lists', 'Form'
-	and 'Tables' html toolbars.
-	
-2000-05-12  Archit Baweja  <bighead@crosswinds.net>
-
-	* NEWS: updated. updated EXTRA_DIST in Makefile.am.
-
-	* AUTHORS: updated.
-
-2000-05-05  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/Makefile.am (peacock_LDADD): removed "-lgtkxmhtml". Now uses
-	the variable $(GTKXMHTML_LIBS) defined by configure macros.
-
-2000-05-02  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c (view_maintbar_cb, view_htmlbars_cb): new callbacks. 
-
-2000-04-26  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c: gtk_widget_show()d all 'Save it?' dialogs.
-
-	* src/callbacks (print_cb, print_setup_cb, prefs_cb): gnome_ok_dialog
-	now replaced by gnome_ok_dialog_parented.
-	
-	* src/windows-main.c (on_Peacock_delete_event): returns TRUE, if
-	saved dialog has to be shown. Quit question dialog, modal and parented.
-
-2000-04-25  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-main.c (create_preview): new function.
-	(file_menu_uiinfo): added 'Preview' menuitem.
-
-	* src/callbacks.c (preview_cb): new function.
-
-	* src/Makefile.am (peacock_LDADD): added "-lgtkxmhtml".
-	
-2000-04-20  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks-html.h: all function now get GtkWidget *, as first
-	parameter. Likewise for all callbacks.
-
-2000-04-18  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-main.c (on_Peacock_delete_event): added check for unsaved
-	file.
-	src/callbacks.c (quit_cb): likewise.
-
-	* src/windows-file.c (save_q_cb_quit): new function.
-
-2000-04-16  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks-html.c (tbar_fonts_button_em_cb): new callback.
-	(tbar_fonts_button_pre_cb): likewise.
-	(tbar_fonts_button_kbd_cb): likewise.
-	(tbar_fonts_button_tt_cb): likewise.
-
-	* src/toolbars.c (fonts_toolbar_uiinfo): added 4 icons for 4 tags.
-	PRE, TT, EM, KBD tags.
-
-	* pixmaps/Makefile.am (EXTRA_DIST): included 4 new icons new tags.
-
-	* src/windows-main.c (create_Peacock): html toolbars dock item can
-	never be vertically docked.
-
-2000-04-15  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-main.c (create_Peacock): a minimal popup menu setup.
-	(menubar_uiinfo): renamed to main_menu_uiinfo.
-		
-	* src/callbacks.c (cut_cb, copy_cb, paste_cb, clear_cb, select_all_cb):
-	use the data parameter in lookup_widget to lookup the main_textbox
-	instead of widget parameter. Done for compatibility with popup menu.
-	
-2000-04-13  Archit Baweja  <bighead@crosswinds.net>
-
-	* doc/C/peacock.sgml: changed the help file, into a multiple page
-	manual. The content is the same, almost. Also, shifted to
-	OASIS DocBook DTD V3.1
-
-	* doc/C/topic.dat: added fields accordingly.
-	
-2000-04-11  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c: all checks for unsaved files, have been shifted
-	here from file-io.c functions. All "Save it?" prompts are now modal
-	and parented.
-
-	* src/windows-file.c: Global variables removed.
-	(save_q_cb_*): new. callbacks for "Save it?" prompts.
-	
-2000-04-09  Archit Baweja  <bighead@crosswinds.net>
-
-	* pixmaps/font_sup.xpm: new icon.
-	font_sub.xpm: likewise.
-	font_minus.xpm: likewise.
-	font_plus.xpm: likewise.
-
-2000-04-08  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-main.c: added GnomeUIInfo definition for Select All
-	menuitem.
-
-	* src/callbacks.c (select_all_cb): callback for Select All menuitem.
-
-	* src/*.[h,c]: changed the headers of all source files, as it says
-	on the GNU website, to properly copyleft a program.
-
-	* src/about.c (create_about_dialog): changed the Copyright line.
-
-	* pixmaps/br.xpm: shortened the icon by one pixel.
-	paragraph.xpm: likewise.
-
-2000-04-05  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c (quit_cb): now shows a dialog, confirming the
-	action.
-
-	* src/windows-main.c (on_Peacock_delete_event): likewise.
-
-	* src/callbacks.c (new_cb): check for unsaved files added.
-	(close_cb): likewise.
-	
-2000-04-04  Archit Baweja  <bighead@crosswinds.net>
-
-	* peacock-tl.[h,c]: files added. A custom widget. A notebook kinda
-	widget for toolbars only. Makes a toolbar from a GnomeUIInfo
-	definition and inserts it into a Notebook widget.
-
-2000-04-03  Archit Baweja  <bighead@crosswinds.net>
-
-	* THANKS: Added a 'thanks' file.
-
-2000-03-29  Archit Baweja  <bighead@crosswinds.net>
-
-	* doc/C/peacock.sgml: file added. A basic help file. Uses DocBook.
-
-	* peacock.desktop.in: file added. GNOME menu file.
-
-	* Makefile.am: added target to include extra files like
-	DEPENDS, HACKING, FEATURES, to be included in the dist.
-
-2000-03-29  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/callbacks.c (cut_cb): flashes a message in the appbar.
-	(copy_cb, paste_cb, clear_cb): likewise.
-
-	* src/file-io.c (file_new): likewise.
-	(file_load, file_save, file_close): likewise.
-
-2000-03-28  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/file-io.[h,c]: files added. File I/O functions.
-	(file_new): prepare app for new file.
-	(file_load): load a file in the editor.
-	(file_save): save the currently open file.
-	(file_close): close the currently open file.
-
-	* src/windows-file.[h,c]: files added. File selection dialogs.
-
-2000-03-27  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-html.[h,c]: files added. Dialogs for the html
-	toolbars. Also callbacks.
-
-	* src/html.[h,c]: files added. HTML related functions.
-	(html_tag_insert): Inserts a html tag in the main textbox.
-	(html_tag_prepare_*_string): functions for preparing strings of
-	tags, which gather info from dialogs, so that the string can be
-	inserted in the main textbox.
-
-2000-03-26  Archit Baweja  <bighead@crosswinds.net>
-
-	* src/windows-main.c: added GnomeUIInfo definition for the main menu.
-
-	* src/toolbars.[h,c]: files added. added GnomeUIInfo definition
-	for the main toolbar, and html toolbars.
-	(create_toolbar_main): creates the main toolbar.
-	(create_html_toolbars): creates a notebook of html toolbars.
-	(create_toolbar_basic): creates the 'Basic' html toolbar.
-	(create_toolbar_fonts): creates the 'Fonts' html toolbar.
-
-	* src/callbacks.[h,c]: files added. Callbacks for the main menu
-	and toolbar.
-
-	* src/callbacks-html.[h,c]: files added. Callbacks for the html
+	* src/shell/peacock-shell-ui.xml: add placeholder for Edit items in
 	toolbar.
 
-2000-03-26  Archit Baweja  <bighead@crosswinds.net>
+	* src/file-manager/peacock-mdi-control.c (verb_File*_cb): blank
+	definition of verb callbacks added.
+	(verb_Edit*_cb): likewise
 
-	* src/main.c: file added. Startup code.
+	* src/shell/peacock-shell-ui.xml: remove 'delimit="top"' from menus.
 
-	* src/windows-main.[h,c]: files added.
-	(create_Peacock): Creates the main window.
-	(set_main_window_title): Updates the title of the main window.
-	(on_Peacock_delete_event): Callback for delete_event signal.
-	(on_Peacock_destroy): Callbacks for destroy signal.
+	* src/shell/peacock-window.c (peacock_window_construct): explicitly
+	activate BonoboControl's activate signal so that UI merging works.
 
-	* src/about.[h,c]: files added.
+2003-07-08  Archit Baweja  <bighead@users.sourceforge.net>
 
-	* src/support.[h,c]: files added. Support code borrowed from Glade.
-	(set_tooltips): Sets a tooltip for a widget.
+	* src/file-manager/peacock-mdi-control.c (peacock_mdi_control_load_ui): new function.
 
-2000-03-25  Archit Baweja  <bighead@crosswinds.net>
+	* src/file-manager/peacock-mdi-ui.xml: new ui xml file.
 
-	* Project Conception.
+	* src/file-manager/Makefile.am: install rules for peacock-mdi-ui.xml.
+	Define UIXMLDIR too.
 
-	* Basic directory structure layed out.
-	Essential toplevel files added.
+	* src/shell/peacock-window.c (peacock_window_construct): replaced call
+	to test GtkWidget with call to PeacockMDI bonobo control. Its ALIVE!
+	YAY!
+	(peacock_window_construct): set default size of window to 400x300.
+	(peacock_window_class_init): setup destructors.
+	(peacock_window_destroy): new function.
+	(peacock_window_finalize): likewise.
+
+	* src/file-manager/Makefile.am: added rules to install .server file for
+	control.
+
+2003-07-07  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/file-manager/peacock-mdi-control.[ch]: new files added. Initial
+	code for the bonobo layer to the PeacockMDI object. Build files
+	added/updated accordingly.
+
+	* src/file-manager/main.c: new file added. Initial code for Bonobo 
+	objects factory.
+
+	* src/file-manager/Makefile.am: new build file for new directory.
+	
+2003-07-06  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/shell/peacock-window.h (IS_PEACOCK_WINDOW_CLASS): macro fix.
+	(IS_PEACOCK_WINDOW_CLASS): likewise.
+
+	* src/README: new file added.
+
+	* src/shell/peacock-window.c (peacock_window_construct): give a unique
+	name to the ui compnent of the main window. Just in case we need it
+	later.
+
+	* src/shell/Makefile.am: install rules for the peacock-shell-ui.xml.
+	(INCLUDES): define DATADIR=/prefix/share/peacock-2,
+	ICONDIR=DATADIR/icons, UIXMLDIR=DATADIR/ui, GLADEDIR=DATADIR/glade.
+
+2003-07-05  Archit Baweja  <bighead@users.sourceforge.net>
+
+	* src/shell/peacock-window.c (verb_HelpAbout_cb): fixed reshowing
+	about dialog bug. (gtk_widget_destroy -> gtk_widget_destroyed)
+
+	* src/shell/peacock-window.[ch]: new files added. 
+
+	* src/shell/main.c (main): peacock gnome 2 port started. new function.
+

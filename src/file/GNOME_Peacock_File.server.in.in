@@ -1,0 +1,23 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:GNOME_Peacock_FileFactory" type="exe"
+            location="@LIBEXECDIR@/peacock-file-control">
+    <oaf_attribute name="repo_ids" type="stringv">
+        <item value="IDL:Bonobo/GenericFactory:1.0"/>
+    </oaf_attribute>
+    <oaf_attribute name="name" type="string" value="PeacockFile controls factory"/>
+    <oaf_attribute name="description" type="string" value="Factory for making PeacockFile bonobo controls"/>
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_Peacock_File" type="factory"
+            location="OAFIID:GNOME_Peacock_FileFactory">
+    <oaf_attribute name="repo_ids" type="stringv">
+        <item value="IDL:Bonobo/Unknown:1.0"/>
+        <item value="IDL:Bonobo/Control:1.0"/>
+    </oaf_attribute>
+    <oaf_attribute name="name" type="string" value="PeacockFile control"/>
+    <oaf_attribute name="description" type="string" value="A PeacockFile bonobo control"/>
+</oaf_server>
+
+</oaf_info>
+
